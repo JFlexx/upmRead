@@ -1,0 +1,95 @@
+********************** TEST 2 (value: 1)**********************
+El admin se logea, añade dos usuarios iguales, el segundo debe fallar, y luego logout
+Result admin login (exp true) : true
+Result add user (exp true) : true -PWD: test1u17356
+Result add user (exp false because user already exist) : false
+
+SUCCESS
+********************** TEST 6 (value: 1)**********************
+user2 login (falla), admin login, crea user2, user2 login otro st, remove user1 (falla), admin borra user1 (ok) borra otro (falla)
+Result user login (exp false becuase user not registered) : false
+Result admin login (exp true) : true
+Result add user2 (exp true) : true
+Result user2 login (exp true) : true
+Result user2 deletes user1 (exp false becuase not allowed) : false
+Result admin deletes user1 (exp true) : true
+Result admin deletes user500 (exp false bacause user500 didn't exist) : false
+
+SUCCESS
+********************** TEST 7 (value: 1)**********************
+user2 login, adduser user 3 (fail), user3 login (fail)
+Result user2 login (exp true) : true
+Result add user3 (exp false because normal user connot register other users) : false
+Result user3 login (exp false because user3 does not exist) : false
+
+SUCCESS
+********************** TEST 8 (value: 1)**********************
+user2 login st1 y st2, st1 logout, changpwd en st1 (fail), changpwd en st2
+Result user2 login con stub1 (exp true) : true
+Result user2 login con stub2 (exp true) : true
+Result user2 change pwd con stub1 (exp false because user2 has logout on stub1-session) : false
+Result user2 change pwd con stub2 (exp true) : true
+
+SUCCESS
+********************** TEST 9 (value: 1)**********************
+User2 logs in con stub1, User2 logs in con stub1, admin logs in con stub1 (false)
+Result user2 login with stub1 (exp true) : true
+Result user2 login again with stub1 (exp true) : true
+Result admin login with stub1 (exp false because sessions cannot be stolen) : false
+
+SUCCESS
+********************** TEST 10 (value: 1)**********************
+user2 login st1, admin login st2, admin borrar user2, st1 hacer login user2 (fail)
+Result user2 login (exp true) : true
+Result admin login (exp true) : true
+Result admin deletes user2 (exp true) because user2 has only one active session : true
+Result user2 login (exp fail) cause was removed : false
+
+SUCCESS
+********************** TEST 14 (value: 1)**********************
+admin crea user4, user4 anade amigo user5 en st2 (fail), user4 login, user4 añade amigo user5 (fail), admin crea user5, use4 añade user5 (ok)
+Result admin login (exp true) : true
+Result admin create user4 (exp true) : true
+Result user4 addFriend User5 (exp fail not login) : false
+Result user4 login (exp true) : true
+Result user4 addFriend User5 (exp fail not exist) : false
+Result admin create user5 (exp true) : true
+Result user4 addFriend User5 (exp true) : true
+
+SUCCESS
+********************** TEST 15 (value: 1)**********************
+user5 logea en st1 y st2, user5 listFriend en st1 (ok y vacia), user 5 añade amigo user4 en st2, user5 listfriends en st1 (ok y 1)
+Result user5 login en st1 (exp true) : true
+Result user5 login en st2 (exp true) : true
+Result user5 listFriends (exp true) and list null : true - [Ljava.lang.String;@589eed
+Result user5 addFriend User4 (exp true) : true
+Result user5 listFriends (exp true) and list size 1 : true - 2
+
+FAIL
+********************** TEST 18 (value: 1)**********************
+admin crea u8 y uN, u8 logea y añade uN, uN añade 2 libros, u8 llamar a consultar libros de amigos y mismo orden
+Result admin login (exp true) : true
+Result admin create user8 (exp true) : true
+Result admin create userN (exp true) : true
+Result user8 login en st1 (exp true) : true
+Result user9 login en st2 (exp true) : true
+Result user8 addFriend User9 (exp true) : true
+Result stub2 addBook (exp true) : true
+Result stub2 addBook (exp true) : true
+Result stub1 getMyFriendsReading (exp true) : true
+Result stub1 getMyFriendsReading last book is Libro2 (exp true) : true - Libro2
+
+SUCCESS
+********************** TEST 20 (value: 1)**********************
+admin crea u12 en st1, u12 logea en st2, u12 añade 3 libros, llama a getMyReading y comprueba orden ok
+Result admin login (exp true) : true
+Result admin create user12 (exp true) : true
+Result user12 login en st1 (exp true) : true
+Result stub1 addBook (exp true) : true
+Result stub1 addBook (exp true) : true
+Result stub1 addBook (exp true) : true
+Result stub1 getReading (exp true & Libro3) : true, libro es: Libro3 true
+
+SUCCESS
+***********************************RESULT******************************
+DESGLOSE: 1 ; 1 ; 1 ; 1 ; 1 ; 1 ; 1 ; 0 ; 1 ; 1 ; 
